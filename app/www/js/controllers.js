@@ -1,6 +1,17 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
+  var store = [
+    {nameDevice:"Luz Branca",namePlace:"Sala"},
+    {nameDevice:"Luz Branca",namePlace:"Cozinha"},
+    {nameDevice:"Luz Branca",namePlace:"Lavabo"},
+    {nameDevice:"Luz Branca",namePlace:"Quarto 1"},
+    {nameDevice:"Luz Branca",namePlace:"Quarto 2"},
+    {nameDevice:"Luz Branca",namePlace:"Garagem"}
+];
+  $scope.itens = store;
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
