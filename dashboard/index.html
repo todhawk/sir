@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAR</title>
+
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <script src="bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="bower_components/angular/angular.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body ng-app="web">
+
+  <header>
+
+  </header>
+
+  <section ng-controller="dashboard">
+
+    <div class="container"> <!-- container div -->
+      <div class="row"> <!-- dashboard rows -->
+
+        <!-- <div class="col-md-3 frameConfig" ng-repeat="device in devices | orderBy:'order'">-->
+        <div class="col-md-3 frameConfig" ng-repeat="device in devices"> <!-- frame 1 -->
+
+          <!-- primeira linha - Nome do ambiente e opções de configuração e info -->
+          <div class="">
+
+            <div class="row" id="barTopFrame">
+              <div class="col-xs-7">
+                <p id="nameDevice" class="device-tittle">{{device.nameDevice}}</p>
+                <p id="nameAmbiente" class="place-tittle">{{device.namePlace}}</p>
+              </div>
+              <div class="col-xs-5">
+                <p class="btn-option-top iconAlign">
+                  <a href="#configModal" data-toggle="modal" data-target="" ng-click="clickToOpen($index)">
+                    <img id="btn-option1" src="img/settings.png" class="iconPadding iconSize">
+                  </a>
+                  <a href="#infoModal" data-toggle="modal" data-target=""ng-click="clickToOpen($index)">
+                    <img id="btn-option2" src="img/information.png" class="iconSize">
+                  </a>
+                </p>
+              </div>
+            </div>
+
+          </div> <!-- fim da primeira linha -->
+
+          <!-- segunda linha - imagem interativa e leitura de status -->
+          <div class="">
+            <div class="row">
+              <div class="col-xs-4">
+                <img ng-src="{{device.image}}" class="sizeImg">
+              </div>
+              <div class="col-xs-8">
+                <p id="valueRead">{{device.status}}</p>
+              </div>
+            </div>
+          </div> <!-- fim da segunda linha -->
+
+          <!-- terceira linha -  -->
+          <div class="">
+            <div class="row">
+              <div class="col-xs-12">
+                <p class="footer">{{"id" + $index}}</p>
+              </div>
+            </div>
+          </div> <!-- fim da terceira linha -->
+
+        </div>
+
+      </div> <!-- end dashboard row -->
+    </div> <!-- end container div -->
+
+    <div class="container"> <!-- config modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="configModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Configuração</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{openModal}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="container"> <!-- info modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="infoModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Configuração</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{openModal}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="container"> <!-- profile -->
+    <!-- Modal -->
+    <div class="modal fade" id="profileModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Cadastro</h4>
+          </div>
+          <div class="modal-body">
+
+            <form class="" action="" method="post">
+              <div class="form-group">
+                <label for="inputName">Nome</label>
+                <input id="inputName" class="form-control" type="text" placeholder="Daniel Alves" required="true">
+              </div>
+              <div class="form-group">
+                <label for="inputEmail">E-mail</label>
+                <input id="inputEmail" class="form-control" type="email" placeholder="usuario@gmail.com" required="true">
+              </div>
+              <div class="form-group">
+                <label for="inputPass">Senha</label>
+                <input id="inputPass" class="form-control" type="password" placeholder="" required="true">
+              </div>
+              <div class="">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+              </div>
+
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Cadastro</button>
+
+  </section>
+
+  <script src="js/javascript.js" charset="utf-8"></script>
+
+</body>
+</html>

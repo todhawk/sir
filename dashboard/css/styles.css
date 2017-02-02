@@ -1,0 +1,59 @@
+p#valueRead:active {
+    color: yellow;
+}
+#nameDevice{
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+}
+#nameAmbiente{
+  font-size: 13px;
+  line-height: 10px;
+}
+#valueRead{
+  font-size: 50px;
+  text-align: center;
+  margin: 0;
+  line-height: 100px;
+  padding-top: 16px;
+}
+#unid{
+  font-size: 70px;
+}
+#barTopFrame{
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 3px 6px #000;
+}
+.frameConfig{
+  width: 230px;
+  color: white;
+  margin: 20px;
+  background-color: rgba(29, 64, 102, 0.9);
+  box-shadow: 5px 5px 12px #000;
+}
+.iconAlign{
+  text-align: right;
+  line-height: 58px;
+  margin: 0px;
+}
+.iconPadding{
+  padding-right: 10px;
+}
+.iconSize{
+  height: 20px;
+}
+.nameAlign{
+  padding-top: 10px;
+}
+.sizeImg{
+  height: 100px;
+  margin-top: 14px;
+}
+.footer{
+  text-align: right;
+  font-style: italic;
+  color: white;
+  font-size: 10px;
+  margin-bottom: 2px;
+}
