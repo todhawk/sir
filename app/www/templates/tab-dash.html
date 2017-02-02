@@ -1,14 +1,16 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="SIR - Sistema de Inteligência Residencial">
   <ion-content class="padding">
-    <div class="list">
+    <div ng-repeat="item in itens">
+      <div class="list">
+        <a class="item item-avatar" href="#">
+          <img ng-src="">
+          <h2>{{item.nameDevice}}</h2>
+          <p>{{item.namePlace}}</p>
+        </a>
+      </div>
+    </div>
 
-      <a class="item item-avatar" href="#">
-        <img src="venkman.jpg">
-        <h2>Venkman</h2>
-        <p>Back off, man. I'm a scientist.</p>
-      </a>
 
-  </div>
 
   </ion-content>
 </ion-view>
