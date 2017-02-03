@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
   var store = [
-    {nameDevice:"Luz Branca",namePlace:"Sala"},
+    {nameDevice:"Luz Branca",namePlace:"Sala grande"},
     {nameDevice:"Luz Branca",namePlace:"Cozinha"},
     {nameDevice:"Luz Branca",namePlace:"Lavabo"},
     {nameDevice:"Luz Branca",namePlace:"Quarto 1"},
