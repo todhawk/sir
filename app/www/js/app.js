@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('tab.profile', {
     url: '/profile',
     views: {
-      'tab-profile': {
+      'profile': {
         templateUrl: 'templates/profile.html',
         controller: 'ProfileCtrl'
       }
@@ -63,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('signup', {
       url: '/signup',
       templateUrl: 'templates/signup.html',
-      controller: 'signupCtrl'
+      controller: 'SignupCtrl'
     })
 
   .state('login', {
@@ -77,7 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       views: {
         'settings': {
           templateUrl: 'templates/settings.html',
-          controller: 'settingsCtrl'
+          controller: 'SettingsCtrl'
         }
       }
     })

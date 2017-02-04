@@ -1,13 +1,46 @@
 <ion-view view-title="SIR - Sistema de Inteligência Residencial">
   <ion-content class="padding">
-    <div ng-repeat="item in itens">
-      <div class="list">
-        <a class="item item-avatar" href="#">
-          <img ng-src="">
-          <h2>{{item.nameDevice}}</h2>
-          <p>{{item.namePlace}}</p>
-        </a>
-      </div>
+
+
+    <!-- <div class="col-md-3 frameConfig" ng-repeat="device in devices | orderBy:'order'">-->
+    <div class="col frameConfig" ng-repeat="device in itens"> <!-- frame 1 -->
+
+      <!-- primeira linha - Nome do ambiente e opções de configuração e info -->
+
+      <div class="row" id="barTopFrame">
+        <div class="col col-90">
+          <p id="nameDevice" class="device-tittle">{{device.nameDevice}}</p>
+          <p id="nameAmbiente" class="place-tittle">{{device.namePlace}}</p>
+        </div>
+        <div class="col">
+          <img ng-src="{{device.statusConection}}" class="sizeImgStatusCon">
+        </div>
+      </div>  <!-- fim da primeira linha -->
+
+      <div class="row">
+        <div class="col col-25">
+          <img ng-src="{{device.image}}" class="sizeImg">
+        </div>
+
+        <div class="col col-33 col-center">
+          <p id="valueRead">{{device.status}}</p>
+        </div>
+
+        <div class="col col-25 col-offset-10 col-center">
+          <label class="toggle toggle-energized">
+            <input type="checkbox">
+            <div class="track">
+             <div class="handle"></div>
+            </div>
+          </label>
+        </div>
+
+        <div class="col col-top">
+          <p class="footer">{{"id" + $index}}</p>
+        </div>
+
+      </div>  <!-- fim da segunda linha -->
+
     </div>
 
 
