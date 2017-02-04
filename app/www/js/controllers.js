@@ -16,6 +16,14 @@ angular.module('starter.controllers', [])
 
 
 })
+.controller('LoginCtrl', function($scope) {
+
+
+})
+.controller('ProfileCtrl', function($scope) {
+
+
+})
 .controller('settingsCtrl', function($scope) {
 
 
