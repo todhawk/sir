@@ -1,31 +1,47 @@
 <ion-view view-title="Perfil">
   <ion-content class="padding">
 
-    <img src="img/user.png" style="width:150px;">
+    <div>
+      <img src="img/user.png" style="display: block; width: 50%; height: auto; margin-left: auto; margin-right: auto;">
+    </div>
 
     <div class="card">
       <div class="item item-divider item-icon-right">
-        <i class="icon ion-edit"></i>
         Pessoal
+        <i class="icon ion-android-create" style="color:blue;" ng-click="openModal()"></i>
       </div>
       <h1>Nome do Usuário</h1>
-      <h5>KEY-USER:JSHFYEISLAMNCVBD</h5>
+      <h5 style="color:red;">KEY-USER:JSHFYEISLAMNCVBD</h5>
       <h5>Nível: admin</h5>
-      <p>Email: email@email.com</p>
+      <p>Email: usuario@dominio.com.br</p>
       <p>Senha: ••••••••</p>
+
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">
+        <div class="row">
+          <div class="col col-20 col-offset-33">
+            <i class="icon ion-email" style="font-size:30px;"></i>
+          </div>
+          <div class="col col-20">
+            <i class="icon ion-chatboxes" style="font-size:30px;"></i>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="list card">
 
       <div class="item item-divider item-icon-right">
-        <i class="icon ion-plus"></i>
+        <i class="icon ion-android-add" style="color:blue;" ng-click="showMsg('Acrescentar um novo MORADOR.')"></i>
         Moradores
       </div>
 
       <a class="item item-avatar" href="#">
         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSN9AwKpLLiC0Gyq_-NTMKNSOJe_2N3qr08WmSlTfpZ68gHdUNT">
         <h2>Nome do Usuário</h2>
-        <h5>KEY-USER:ZWIRUDFYDJSNCVXB</h5>
+        <h5 style="color:red;">KEY-USER:ZWIRUDFYDJSNCVXB</h5>
         <p>Email do usuário</p>
         <p>Nível de usuário: 1</p>
       </a>
@@ -33,7 +49,7 @@
       <a class="item item-avatar" href="#">
         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTGIhsgOg8v0G6sKe9CPsZWv3EKs6snQx6OmvEyyLvV2WTAS3d_uQ">
         <h2>Nome do Usuário</h2>
-        <h5>KEY-USER:RIEORPLKJDFGVBEM</h5>
+        <h5 style="color:red;">KEY-USER:RIEORPLKJDFGVBEM</h5>
         <p>Email do usuário</p>
         <p>Nível de usuário: 1</p>
       </a>
@@ -42,21 +58,56 @@
 
     <div class="list card">
       <div class="item item-divider item-icon-right">
-        <i class="icon ion-plus"></i>
+        <i class="icon ion-android-add" style="color:blue;" ng-click="showMsg('Acrescentar uma nova CASA.')"></i>
         Casa
       </div>
 
       <a class="item item-avatar" href="#">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_SMbs2rWcEyMBOE2K0MYfFEfwHuWMAj-EhkzDh3wxLFU7ohjQbw">
         <h2>Nome do Imóvel</h2>
-        <h5>KEY_HOUSE:KJHASDFUIYASDKHK</h5>
+        <h5 style="color:red;">KEY_HOUSE:KJHASDFUIYASDKHK</h5>
         <p>End: Rua um dois três, n. 123</p>
         <p>Cidade: São Paulo-SP</p>
         <p>CEP: 00000-000</p>
       </a>
 
     </div>
+    <script id="editarPerfil" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">Perfil - editar</h1>
+        </ion-header-bar>
+        <ion-content>
+          <div class="list">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Nome</span>
+              <input type="text" value="" placeholder="John Suhr">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">E-mail</span>
+              <input type="text" value="" placeholder="john@suhr.com">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Senha atual</span>
+              <input type="password" placeholder="••••••••">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Nova senha</span>
+              <input type="password" placeholder="••••••••">
+            </label>
 
+            <ion-list>
+              <ion-checkbox ng-model="checkButton" ng-click="showPassword(checkButton)" value="false">Mostrar a senha</ion-checkbox>
+            </ion-list>
+          </div>
+
+          <div>
+            <button class="button button-block button-positive button-outline" ng-click="closeModal()">Salvar Alterações</button>
+            <button class="button button-full button-clear button-assertive" ng-click="closeModal()">Cancelar</button>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>
 
   </ion-content>
 </ion-view>

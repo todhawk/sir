@@ -32,7 +32,7 @@ p#valueRead:active {
 .frameConfig{
   width: auto;
   color: white;
-  margin: 20px;
+  margin: 10px;
   background-color: rgba(29, 64, 102, 0.9);
   box-shadow: 5px 5px 12px #000;
 }
