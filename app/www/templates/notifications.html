@@ -1,0 +1,20 @@
+<ion-view view-title="Notificações">
+  <ion-content class="padding">
+
+    <div class="list">
+
+      <div class="item item-divider">
+        Quadro de Avisos
+      </div>
+
+      <div class=""ng-repeat="notice in notifications">
+        <a class="item" href="">
+          <h5>{{notice.data}}</h5>
+          <h4 style="font-weight: bold;">{{notice.message}}</h4>
+        </a>
+      </div>
+
+
+    </div>
+  </ion-content>
+</ion-view>

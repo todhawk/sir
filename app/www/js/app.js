@@ -82,6 +82,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
+  .state('tab.notifications', {
+      url: '/notifications',
+      views: {
+        'notifications': {
+          templateUrl: 'templates/notifications.html',
+          controller: 'NotificationsCtrl'
+        }
+      }
+    })
+
+  .state('tab.scene', {
+      url: '/scene',
+      views: {
+        'scene': {
+          templateUrl: 'templates/scene.html',
+          controller: 'SceneCtrl'
+        }
+      }
+    })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 

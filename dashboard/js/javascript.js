@@ -12,6 +12,7 @@ app.controller("SampleCtrl", function($scope, $firebaseArray) {
 
   var ref = firebase.database().ref().child("messages");
   // create a synchronized array
+  console.log($firebaseArray(ref));
   $scope.messages = $firebaseArray(ref);
   // add new items to the array
   // the message is automatically added to our Firebase database!

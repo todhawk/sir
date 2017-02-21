@@ -1,12 +1,11 @@
 <ion-view view-title="Login" hide-back-button="true" hide-nav-bar="true" cache-view="false" nav-transition="none">
-  <ion-content  padding="true">
-
+  <ion-content  class="padding">
     <div class="spacer" style="width: auto; height: 145px;"></div>
 
     <div class="list">
       <div class="padding">
-        <button class="button button-block button-positive">Faça login com sua conta do Facebook</button>
-        <button class="button button-block button-assertive">Faça login com sua conta do Google+</button>
+        <button class="button button-block button-positive" ng-click="facebookBtn()">Faça login com sua conta do Facebook</button>
+        <button class="button button-block button-assertive" ng-click="googleBtn()">Faça login com sua conta do Google+</button>
       </div>
 
       <div class="padding">
@@ -23,8 +22,8 @@
 
 
       <div class="padding">
-        <button class="button button-block button-balanced  button-outline">Entrar</button>
-        <button class="button button-block button-clear button-positive">crie uma conta agora mesmo!</button>
+        <button class="button button-block button-balanced  button-outline" ng-click="goToDash()">Entrar</button>
+        <button class="button button-block button-clear button-positive" ng-click="goToSignup()">crie uma conta agora mesmo!</button>
       </div>
 
     </div>

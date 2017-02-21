@@ -1,40 +1,55 @@
-angular.module('starter.controllers', ['ionic'])
+angular.module('starter.controllers', ['ionic', 'firebase'])
 
-.controller('DashCtrl', function($scope) {
-  var infoDevice = [
-    {id:1,order:3,type:"atuador",nameDevice:"Luz do Quarto",namePlace:"Quarto Casal",image:"img/lamp.png",statusConection:"img/success.png",status:"OFF"},
-    {id:2,order:4,type:"atuador",nameDevice:"Luz da Sala",namePlace:"Sala",image:"img/abajur.png",statusConection:"img/success.png",status:"OFF"},
-    {id:3,order:5,type:"atuador",nameDevice:"Luz Cozinha",namePlace:"Cozinha",image:"img/lamp.png",statusConection:"img/warning.png",status:"ON"},
-    {id:4,order:2,type:"atuador",nameDevice:"Luz Cozinha",namePlace:"Cozinha",image:"img/lamp.png",statusConection:"img/warning.png",status:"OFF"},
-    {id:5,order:1,type:"atuador",nameDevice:"Cibele",namePlace:"Cozinha",image:"img/lamp.png",statusConection:"img/warning.png",status:"ON"},
-    {id:6,order:6,type:"temperatura",nameDevice:"Luz do Lavabo",namePlace:"Lavabo",image:"img/therm.png",statusConection:"img/success.png",status:"28ºC"}
-  ];
-  $scope.itens = infoDevice;
-
-})
-.controller('SignupCtrl', function($scope) {
-
+.controller('DashCtrl', function($scope,$http) {
+  $http({
+    method: 'GET',
+    url: 'http://localhost:3000/devices'
+  }).then(function successCallback(response) {
+    $scope.itens = response.data;
+      // this callback will be called asynchronously
+      // when the response is available
+    }, function errorCallback(response) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+    });
 
 })
-.controller('LoginCtrl', function($scope) {
 
-
-})
-.controller('ProfileCtrl', function($scope,$ionicModal) {
-  $scope.showPassword = function(checkButton) {
-    // console.log(checkButton);
-    if (checkButton == true) {
-      var x = document.getElementsByTagName("INPUT")[2];
-      x.getAttributeNode("type").value = "text";
-      var x = document.getElementsByTagName("INPUT")[3];
-      x.getAttributeNode("type").value = "text";
-    }else {
-      var x = document.getElementsByTagName("INPUT")[2];
-      x.getAttributeNode("type").value = "password";
-      var x = document.getElementsByTagName("INPUT")[3];
-      x.getAttributeNode("type").value = "password";
-    }
+.controller('SignupCtrl', function($scope,$state) {
+  $scope.goToLogin = function() {
+    $state.go('login');
   }
+
+
+})
+
+.controller('LoginCtrl', function($scope,$state,SignAcounts) {
+  $scope.googleBtn = function() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    SignAcounts.sign(provider);
+  };
+
+  $scope.facebookBtn = function() {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    SignAcounts.sign(provider);
+  };
+
+  $scope.goToSignup = function() {
+    $state.go('signup');
+  };
+
+
+})
+
+.controller('ProfileCtrl', function($scope, $ionicModal, SignAcounts, $firebaseArray) {
+
+  // Conecta a variavel tabelaRef a uma tabela no firebase chamada "messages"
+  // var tabelaRef = firebase.database().ref("notifications").child("-KctfiI3OLI6S6zspgNY");
+  // sincroniza a variavel de escopo com a tabela
+  // $scope.daniel = $firebaseArray(tabelaRef);
+  // console.log($scope.daniel);
+
+  $scope.userInfo = SignAcounts.getUserInfo();
 
   $ionicModal.fromTemplateUrl('editarPerfil', {
     scope: $scope,
@@ -63,7 +78,18 @@ angular.module('starter.controllers', ['ionic'])
 
 
 })
+
 .controller('SettingsCtrl', function($scope) {
 
+})
+
+.controller('NotificationsCtrl', function($scope) {
+  var ref = firebase.database().ref("notifications").child("-KctfiI3OLI6S6zspgNY");
+  ref.on('value', function(snap) {
+    $scope.notifications = snap.val();
+  });
+})
+
+.controller('SceneCtrl', function($scope) {
 
 })

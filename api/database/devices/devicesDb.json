@@ -1,0 +1,64 @@
+{
+  "-KctfiI3OLI6S6zspgNY" : {
+    "0" : {
+      "type" : "action",
+      "nameDevice" : "Luz do Quarto",
+      "namePlace" : "Quarto Casal",
+      "image" : "img/lamp.png",
+      "statusConection":"img/success.png",
+      "status" : "OFF",
+      "flagStatus" : 0,
+      "flagCom" : 1
+    },
+    "1" : {
+      "type" : "action",
+      "nameDevice" : "Luz da Sala",
+      "namePlace" : "Sala",
+      "image" : "img/abajur.png",
+      "statusConection" : "img/success.png",
+      "status" : "OFF",
+      "flagStatus" : 0,
+      "flagCom" : 1
+    },
+    "2" : {
+      "type" : "action",
+      "nameDevice" : "Luz Cozinha",
+      "namePlace" : "Cozinha",
+      "image" : "img/lamp.png",
+      "statusConection" : "img/warning.png",
+      "status" : "ON",
+      "flagStatus" : 1,
+      "flagCom" : 0
+    },
+    "3" : {
+      "type" : "action",
+      "nameDevice" : "Luz Cozinha",
+      "namePlace" : "Cozinha",
+      "image" : "img/lamp.png",
+      "statusConection" : "img/warning.png",
+      "status" : "OFF",
+      "flagStatus" : 0,
+      "flagCom" : 0
+    },
+    "4" : {
+      "type" : "action",
+      "nameDevice" : "Cibele",
+      "namePlace" : "Cozinha",
+      "image" : "img/lamp.png",
+      "statusConection" : "img/warning.png",
+      "status" : "ON",
+      "flagStatus" : 1,
+      "flagCom" : 0
+    },
+    "5" : {
+      "type" : "read",
+      "nameDevice" : "Luz do Lavabo",
+      "namePlace" : "Lavabo",
+      "image" : "img/therm.png",
+      "statusConection" : "img/success.png",
+      "status" : "28ºC",
+      "flagStatus" : 28,
+      "flagCom" : 1
+    }
+  }
+}

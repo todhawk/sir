@@ -33,6 +33,28 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+
+    <!-- Config Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAafDchHBhcoFdtow3Fvia9vNKruczamc8",
+        authDomain: "sistemasir-5944f.firebaseapp.com",
+        databaseURL: "https://sistemasir-5944f.firebaseio.com",
+        storageBucket: "sistemasir-5944f.appspot.com",
+        messagingSenderId: "745665908827"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+
+    <!-- login with Google Acount -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
   </head>
   <body ng-app="starter">
     <!--
