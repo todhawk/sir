@@ -1,6 +1,9 @@
 <ion-view view-title="Dashboard">
-  <ion-content class="padding">
+  <ion-content id="flagColor" class="padding">
 
+    <div class="">
+      <p>{{"Bandeira: " + flagenergy.flag}}</p>
+    </div>
 
     <!-- <div class="col-md-3 frameConfig" ng-repeat="device in devices | orderBy:'order'">-->
     <div class="col frameConfig" ng-repeat="device in itens"> <!-- frame 1 -->
@@ -28,9 +31,9 @@
 
         <div class="col col-25 col-offset-10 col-center">
           <label class="toggle toggle-energized">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="valor" ng-click="sendToFirebase(valor)">
             <div class="track">
-             <div class="handle"></div>
+              <div class="handle"></div>
             </div>
           </label>
         </div>
@@ -42,8 +45,6 @@
       </div>  <!-- fim da segunda linha -->
 
     </div>
-
-
 
   </ion-content>
 </ion-view>

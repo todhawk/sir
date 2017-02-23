@@ -1,6 +1,17 @@
 angular.module('starter.controllers', ['ionic', 'firebase'])
 
-.controller('DashCtrl', function($scope,$http) {
+.controller('DashCtrl', function($scope,$http,$state) {
+  //  ------------------         Flag detect         ------------------
+  firebase.database().ref("energyCompany").on("child_changed", function(snapshot, prevChildKey) {
+    // console.log(snapshot.val().flag);
+    document.getElementById("flagColor").style.background = snapshot.val().flag;
+    // document.getElementById("flagColor").style.background.opacity = "0.5";
+  });
+
+  $scope.sendToFirebase = function(valor) {
+    console.log(valor);
+  };
+
   $http({
     method: 'GET',
     url: 'http://localhost:3000/devices'
@@ -12,6 +23,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       // called asynchronously if an error occurs
       // or server returns response with an error status.
     });
+
+    $http({
+      method: 'GET',
+      url: 'http://localhost:3000/flagenergy'
+    }).then(function successCallback(response) {
+      $scope.flagenergy = response.data;
+      document.getElementById("flagColor").style.background = response.data.flag;
+      }, function errorCallback(response) {
+      });
 
 })
 
@@ -34,8 +54,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     SignAcounts.sign(provider);
   };
 
-  $scope.goToSignup = function() {
-    $state.go('signup');
+  $scope.goToDash = function() {
+    $state.go('tab.dash');
   };
 
 

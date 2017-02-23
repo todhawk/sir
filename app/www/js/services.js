@@ -40,7 +40,6 @@ angular.module('starter.services', [])
   return svc;
 })
 
-
 .factory('test', function() {
 
 

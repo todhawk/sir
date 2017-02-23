@@ -74,6 +74,12 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
+//  ------------------         Flag detect         ------------------
+firebase.database().ref("energyCompany").on("child_changed", function(snapshot, prevChildKey) {
+  console.log(snapshot.val());
+});
+
+
   // var ref = firebase.database().ref("users");
 
   // firebase.database().ref("users").on("value", function(snapshot) {
@@ -123,8 +129,50 @@ app.delete('/profileHouse', function (req, res) {
 
 })  //end of endpoint /profileHouse
 
+//  ------------------         post Form Landing Page         ------------------
+app.post('/formlanding', function (req, res) {
+  var ref = firebase.database().ref("messageLandingPage");
+  var erros = []; // será preenchida com possiveis erros de autenticação
+
+  if (!req.body.name) {     erros.push("Nome não informado");   }
+  if (!req.body.email) {    erros.push("E-mail não informado"); }
+  if (!req.body.message) {  erros.push("Menssagem não informada");  }
+
+  if (erros.length > 0) {
+    res.send( { status: false,  erros: erros  } );
+  } else {
+    var payload = {
+      date : Date(),
+      name : req.body.name,
+      email : req.body.email,
+      message : req.body.message
+    };
+    ref.push(payload);
+    res.send("Menssagem enviada com sucesso!");
+  }; //end else
+
+})  //end of endpoint /formlanding
+
+//  ------------------         post - flag         ------------------
+app.post('/flag', function (req, res) {
+  var ref = firebase.database().ref(); // para o update não precisa referenciar uma tabela neste ponto
+var payload = {}; //cria uma variável do tipo objeto
+
+var sendFlag = req.body.flag;
+
+//Neste ponto sim é mencionada uma tabela e uma filha podendo haver variasfilhas
+payload['flags/flag1/'] = sendFlag; // atribui o valor contido no objeto dataUser à payload
+ref.update(payload); // execulta o update
+res.send("ok");
+})  //end of endpoint /flag
+
 //  ------------------         consultaDoHardware         ------------------
 app.get('/flag', function (req, res) {
+  var ref = firebase.database().ref("flags");
+  ref.child("flag1").once('value')
+  .then(function(snap) {
+    res.send(snap.val());
+  });
   //TO DO - A cada x segundos o hardware bate nesta url e pergunta qual é o
   //        status atual gravado no db "flags" e recebe uma resposta.
   //        Caso seja diferente de seu valor atual o mesmo inverte seu estado e
@@ -156,16 +204,28 @@ app.get('/logs', function (req, res) {
 
 })  //end of endpoint /logs
 
+//  ------------------         get-flag energy         ------------------
+app.get('/flagenergy', function (req, res) {
+  var ref = firebase.database().ref("energyCompany");
+
+  ref.child("aesEletropaulo").once('value')
+    .then(function(snap) {
+      res.send(
+        snap.val()
+      );
+    });
+})
+
 //  ------------------         get-devices         ------------------
 app.get('/devices', function (req, res) {
   var ref = firebase.database().ref("devicesGroup");
+
   ref.child("-KctfiI3OLI6S6zspgNY").once('value')
     .then(function(snap) {
       res.send(
         snap.val()
       );
     });
-
 })
 
 //  ------------------         get-users         ------------------
