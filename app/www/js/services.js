@@ -8,29 +8,51 @@ angular.module('starter.services', [])
     return userInfo;
   };
 
-  svc.signEmail = function(name,email,password) {
+  svc.createUserEmail = function(name,email,password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode);
       console.log(errorMessage);
-    }) //end firebase.auth
+    }) //end catch
     .then(function() { // Caso o Sign Up de certo o usuário será logado automaticamente
-      var currentUser = firebase.auth().currentUser;
-      // console.log("CurrentUser: " , currentUser);
-      if (currentUser) {
-        currentUser.updateProfile({
+      if (firebase.auth().currentUser) {
+        firebase.auth().currentUser.updateProfile({
           displayName : name
+        }).then(function() {
+          var currentUser = firebase.auth().currentUser;
+          // console.log("CurrentUser: " , currentUser);
+          userInfo = {
+            name:currentUser.displayName,
+            email:currentUser.email,
+            photoURL:currentUser.photoURL,
+            uid:currentUser.uid
+          };
+          $state.go('tab.dash');
         });
-        userInfo = {
-          name:currentUser.displayName,
-          email:currentUser.email,
-          photoURL:currentUser.photoURL,
-          uid:currentUser.uid
-        };
-      $state.go('tab.dash');
       }
-    });
+    }); //end then
+  };
+
+
+  svc.signInEmail = function(email,password) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+     .catch(function(error) {
+       console.log(error);
+     }) //end catch
+     .then(function() { // Caso o Sign Up de certo o usuário será logado automaticamente
+       var currentUser = firebase.auth().currentUser;
+       // console.log("CurrentUser: " , currentUser);
+       if (currentUser) {
+         userInfo = {
+           name:currentUser.displayName,
+           email:currentUser.email,
+           photoURL:currentUser.photoURL,
+           uid:currentUser.uid
+         };
+       $state.go('tab.dash');
+       }
+     }); //end then
   };
 
   svc.signProvider = function(provider) {
