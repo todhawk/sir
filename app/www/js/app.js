@@ -60,10 +60,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('passForget', {
-      url: '/passForget',
-      templateUrl: 'templates/passForget.html',
-      controller: 'PassForgetCtrl'
+  .state('passRedefine', {
+      url: '/passRedefine',
+      templateUrl: 'templates/passRedefine.html',
+      controller: 'PassRedefineCtrl'
     })
 
   .state('signup', {

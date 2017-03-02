@@ -68,7 +68,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('PassForgetCtrl', function($scope,$state,SignAccount) {
+.controller('PassRedefineCtrl', function($scope,$state,SignAccount) {
   $scope.passRedefine = function(email) {
     SignAccount.passRedefine(email);
   };
@@ -107,7 +107,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   };
 
   $scope.goToPassRedefine = function() {
-    $state.go('passForget');
+    $state.go('passRedefine');
   };
 
   $scope.goToSignup = function() {
