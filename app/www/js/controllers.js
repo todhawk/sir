@@ -70,9 +70,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 .controller('SignupCtrl', function($scope,$state,$http,SignAccount) {
 
-  $scope.sendDataUser = function(name,email,password) {
-    var status = SignAccount.signEmail(name,email,password);
-    console.log(status);
+  $scope.createUser = function(name,email,password) {
+    SignAccount.createUserEmail(name,email,password);
   };
 
   $scope.goToLogin = function() {
@@ -82,6 +81,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 .controller('LoginCtrl', function($scope,$state,SignAccount) {
+  $scope.signInEmail = function(email,password) {
+    SignAccount.signInEmail(email,password);
+  };
+
   $scope.googleBtn = function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     SignAccount.signProvider(provider);
