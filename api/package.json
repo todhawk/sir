@@ -12,7 +12,8 @@
     "body-parser": "^1.16.0",
     "cors": "^2.8.1",
     "express": "^4.14.1",
-    "firebase": "^3.6.9"
+    "firebase": "^3.6.9",
+    "nodemon": "^1.11.0"
   },
   "devDependencies": {},
   "description": ""
