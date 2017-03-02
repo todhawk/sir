@@ -77,27 +77,6 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-//  ------------------         Detect a new user         ------------------
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) { // se existir um novo usuário então sera criado um novo ambiente user
-//     console.log("Detectado cadastro de novo usuário!");
-//     var ref = firebase.database().ref();
-//     var payload = {};
-//     var uid = user.uid;
-//     var dataUser = {
-//       nameUser : user.displayName,
-//       emailUser : user.email,
-//       photoURL : user.photoURL
-//     };
-//     payload['users/' + uid + '/'] = dataUser;
-//     ref.update(payload);
-//
-//   } else {
-//     console.log();
-//     console.log("onAuthStateChanged: " , user);
-//   }
-// });
-
 //  ------------------         Flag detect         ------------------
 firebase.database().ref("energyCompany").on("child_changed", function(snapshot, prevChildKey) {
   console.log(snapshot.val());
