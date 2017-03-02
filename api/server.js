@@ -4,6 +4,9 @@ var express = require('express');
 var cors = require('cors');
 var firebase = require("firebase");
 
+//  ------------------         Seus módulos         ------------------
+var calc = require('./servicos/calculos');
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAafDchHBhcoFdtow3Fvia9vNKruczamc8",
@@ -23,82 +26,101 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded
 
-//  ------------------         configuração do recebimento de temperaturas         ------------------
-var qutRead = 4;
-var s1Store = []; //Sala 01
-var s2Store = []; //Sala 02
-var s3Store = []; //Sala 03
+//  ------------------         Funções         ------------------
+var action = {};
+action.newPostKey = function() {
+  return firebase.database().ref().push().key;
+};
 
-var calcMedia = function(sense8) {
-  var soma = 0;
-  for(var i=0 ; i<sense8.length ; i++){
-    soma += parseFloat(sense8[i]);
-  }
-  console.log("Média" + soma/4 + "\n");
-  s1Store = [];
+var configFirstAccess = function(nameUser) {
+  var user = firebase.auth().currentUser;
+  user.updateProfile({
+    displayName: nameUser
+  }).then(function() {
+    console.log("Nome do usuario atualizado");
+    console.log("\n\nNome :" , user.displayName);
+    console.log("Email :" , user.email);
+    console.log("Uid :" , user.uid);
+    console.log("PhotoUrl :" , user.photoUrl);
+    console.log("\n\n");
 
-  var ref = firebase.database().ref("notifications");
-  var dataAtual = new Date();
-  var payload = {
-    data : dataAtual.getDate() + "/" + dataAtual.getMonth() + "/" + dataAtual.getFullYear(),
-    message : "Olá! A Sala 01 encontra-se com temperatura de " + soma/4 + " °C",
-    read : false
-  };
-  ref.child("-KctfiI3OLI6S6zspgNY").push(payload);
-  console.log("Menssagem enviada para o banco de dados!");
-}
-
-
+    // var ref = firebase.database().ref();
+    // var payload = {};
+    // var uid = user.uid;
+    // var date = new Date();
+    // var dataUser = {
+    //   nome : user.displayName,
+    //   email : user.email,
+    //   dateCad : {
+    //     dia : date.getDate(),
+    //     mes : date.getMonth(),
+    //     ano : date.getFullYear(),
+    //     diaSemana : date.getDay(),
+    //     hora : date.getHours(),
+    //     minuto : date.getMinutes(),
+    //     segundo : date.getSeconds()
+    //   }
+    // };
+    // payload['users/' + uid + '/'] = dataUser;
+    // ref.update(payload);
+  }, function(error) {
+    console.log("Nome do usuario não atualizado");
+  });
+};
 
 //  ##################         EVENTS         ##################
-
-
-//  ------------------         Detect a new user         ------------------
 firebase.auth().onAuthStateChanged(function(user) {
-  if (user) { // se existir um novo usuário então sera criado um novo ambiente user
-    console.log("Detectado cadastro de novo usuário!");
-    var ref = firebase.database().ref();
-    var payload = {};
-    var uid = user.uid;
-    var dataUser = {
-      nameUser : user.displayName,
-      emailUser : user.email,
-      photoURL : user.photoURL
-    };
-    payload['users/' + uid + '/'] = dataUser;
-    ref.update(payload);
+  if (user) {
+    var ref = firebase.database().ref("users");
 
-  } else {
-    console.log();
-    console.log("onAuthStateChanged: " , user);
+    ref.child(user.uid).once('value')
+      .then(function(snap) {
+        if (snap) {
+          snap.val();
+        } else {
+          console.log("usuário não encontrado");
+        }
+      });
   }
 });
+
+//  ------------------         Detect a new user         ------------------
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) { // se existir um novo usuário então sera criado um novo ambiente user
+//     console.log("Detectado cadastro de novo usuário!");
+//     var ref = firebase.database().ref();
+//     var payload = {};
+//     var uid = user.uid;
+//     var dataUser = {
+//       nameUser : user.displayName,
+//       emailUser : user.email,
+//       photoURL : user.photoURL
+//     };
+//     payload['users/' + uid + '/'] = dataUser;
+//     ref.update(payload);
+//
+//   } else {
+//     console.log();
+//     console.log("onAuthStateChanged: " , user);
+//   }
+// });
 
 //  ------------------         Flag detect         ------------------
 firebase.database().ref("energyCompany").on("child_changed", function(snapshot, prevChildKey) {
   console.log(snapshot.val());
 });
 
-
-  // var ref = firebase.database().ref("users");
-
-  // firebase.database().ref("users").on("value", function(snapshot) {
-  //   console.log(snapshot.val());
-  // }, function (errorObject) {
-  //   console.log("The read failed: " + errorObject.code);
-  // });
-
-//   firebase.database().ref("users").on("child_added", function(snapshot, prevChildKey) {
-//   var newPost = snapshot.val();
-//   console.log("----------------------------------------------------");
-//   console.log("Sua Chave:" + snapshot.key);
-//   console.log("Nome: " + newPost.nome);
-//   console.log("Email: " + newPost.email);
-//   console.log("Previous Post ID: " + prevChildKey);
-// });
-
-
 //  ##################         END_POINTS (URLs)         ##################
+
+//  ------------------         get - suaUrl         ------------------
+app.get('/suaUrl', function (req, res) {
+
+})  //end of endpoint /suaUrl
+
+//  ------------------         get - teste         ------------------
+app.get('/teste', function (req, res) {
+  res.send("A soma é: " + calc.calcSoma(10,8));
+})  //end of endpoint /teste
 
 //  ------------------         post - profileHouse         ------------------
 app.post('/profileHouse', function (req, res) {
@@ -156,14 +178,14 @@ app.post('/formlanding', function (req, res) {
 //  ------------------         post - flag         ------------------
 app.post('/flag', function (req, res) {
   var ref = firebase.database().ref(); // para o update não precisa referenciar uma tabela neste ponto
-var payload = {}; //cria uma variável do tipo objeto
+  var payload = {}; //cria uma variável do tipo objeto
 
-var sendFlag = req.body.flag;
+  var sendFlag = req.body.flag;
 
-//Neste ponto sim é mencionada uma tabela e uma filha podendo haver variasfilhas
-payload['flags/flag1/'] = sendFlag; // atribui o valor contido no objeto dataUser à payload
-ref.update(payload); // execulta o update
-res.send("ok");
+  //Neste ponto sim é mencionada uma tabela e uma filha podendo haver variasfilhas
+  payload['flags/flag1/'] = sendFlag; // atribui o valor contido no objeto dataUser à payload
+  ref.update(payload); // execulta o update
+  res.send("ok");
 })  //end of endpoint /flag
 
 //  ------------------         consultaDoHardware         ------------------
@@ -215,6 +237,30 @@ app.get('/flagenergy', function (req, res) {
       );
     });
 })
+
+//  ------------------         post-therms - send data         ------------------
+// app.get('/in/:therm', function(req, res){
+app.post('/therm', function(req, res){
+  console.log(req.body);
+  var obj = req.body;
+
+  if(obj.id == "sala01"){
+    s1Store.push(obj.temp);
+    console.log(s1Store);
+    if (s1Store.length == qutRead) {
+      calcMedia(s1Store);
+    }
+  }else if(obj.id == "sala02"){
+    // s1Store.push(obj.temp);
+  }else if(obj.id == "auditorio"){
+    // s1Store.push(obj.temp);
+  }else {
+    console.log("ID não encontrada.");
+  }
+
+
+  res.send('\nok Cibele....recebi!\n\n');
+});
 
 //  ------------------         get-devices         ------------------
 app.get('/devices', function (req, res) {
@@ -282,69 +328,76 @@ app.get('/users', function (req, res) {
 
 })
 
+//  ------------------         Redefinição de senha         ------------------
+app.post('/resetPassword', function (req, res) {
+  var auth = firebase.auth();
+  var emailAddress = req.body.email;
+
+  auth.sendPasswordResetEmail(emailAddress).then(function() {
+    res.send("Enviamos um email para você com as informações necessárias para obter nova senha!");
+  }, function(error) {
+    res.send(error);
+  });
+})  //end of endpoint /newpassword
+
 //  ------------------         signOut         ------------------
 app.post('/signout', function (req, res) {
   firebase.auth().signOut().then(function() {
-    // Sign-out successful.
+    res.send("ok");
   }, function(error) {
     // An error happened.
   });
 })  //end of endpoint /signout
 
-//  ------------------         post-therms - send data         ------------------
-// app.get('/in/:therm', function(req, res){
-app.post('/therm', function(req, res){
-    console.log(req.body);
-    var obj = req.body;
-
-    if(obj.id == "sala01"){
-      s1Store.push(obj.temp);
-      console.log(s1Store);
-      if (s1Store.length == qutRead) {
-        calcMedia(s1Store);
-      }
-    }else if(obj.id == "sala02"){
-      // s1Store.push(obj.temp);
-    }else if(obj.id == "auditorio"){
-      // s1Store.push(obj.temp);
-    }else {
-      console.log("ID não encontrada.");
-    }
-
-
-    res.send('\nok Cibele....recebi!\n\n');
-});
-
 //  ------------------         signInEmail         ------------------
-app.post('/signinEmail', function (req, res) {
-  firebase.auth().signInWithEmailAndPassword("email", "password").catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log("Error Code: " + errorCode);
-    console.log("Error Message: " + errorMessage);
+app.post('/signin', function (req, res) {
+  var errorAuth = [];
+  firebase.auth().signInWithEmailAndPassword(req.body.emailUser, req.body.passwordUser).catch(function(error) {
+    errorAuth = [];
+    errorAuth.push(error.code);
+    errorAuth.push(error.message);
   });
+
+  setTimeout(function() {
+    if (errorAuth) {
+      res.json({errorStatus : true, error : errorAuth});
+    } else {
+      res.json({errorStatus : false, error : errorAuth});
+    }
+  },2000);
+
 })  //end of endpoint /signinEmail
 
 //  ------------------         signUpEmail         ------------------
-app.post('/signupEmail', function (req, res) {
-  // req.body.nome é uma variavel enviada no corpo da requisição pelo usuário
+app.post('/signup', function (req, res) {
   var erros = []; // será preenchida com possiveis erros de autenticação
-
-  if (!req.body.nome) {                         erros.push("Nome não informado");   }
-  if (!req.body.email) {                        erros.push("E-mail não informado"); }
-  if (!req.body.senha || !req.body.re_senha) {  erros.push("Senha não informada");  }
+  var errorAuth = [];
+  if (!req.body.nameUser)                                  {  erros.push("Nome não informado");   }
+  if (!req.body.emailUser)                                 {  erros.push("E-mail não informado"); }
+  if (!req.body.passwordUser || !req.body.re_passwordUser) {  erros.push("Senha não informada");  }
 
   if (erros.length > 0) {
     res.send( { status: false,  erros: erros  } );
   } else {
-      firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.senha).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log("Error Code: " + errorCode);
-        console.log("Error Message: " + errorMessage);
-      }); //end firebase.auth
-    }; //end else
+    firebase.auth().createUserWithEmailAndPassword(req.body.emailUser, req.body.passwordUser).catch(function(error) {
+      errorAuth = [];
+      errorAuth.push(error.code);
+      errorAuth.push(error.message);
+    }); //end firebase.auth
+
+    setTimeout(function() {
+      if (errorAuth) {
+        res.json({errorStatus : true, error : errorAuth});
+      } else {
+        res.json({errorStatus : false, error : errorAuth});
+      }
+    },3000);
+
+
+    }; //end else main
+
 })  //end of endpoint /signupEmail
+
 
 //  ------------------         app Listen - node         ------------------
 app.listen(3000, function () {

@@ -8,9 +8,42 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     // document.getElementById("flagColor").style.background.opacity = "0.5";
   });
 
+  $scope.status = "#off";
+
   $scope.sendToFirebase = function(valor) {
-    console.log(valor);
+    var comando;
+
+    if(valor == true){
+      comando = "#on";
+    }else if (valor == false) {
+      comando  = "#off";
+    }
+    $scope.status = comando;
+
+    var x = '{\"';
+    x += 'flag';
+    x += '\" : ';
+    x += '\"';
+    x += comando;
+    x += '\"';
+    x += '}';
+
+    var data = JSON.parse(x);
+
+    console.log(data);
+
+
+    $http({
+      method: 'POST',
+      url: 'http://localhost:3000/flag',
+      data:data
+    }).then(function successCallback(response) {
+      $scope.flagenergy = response.data;
+      document.getElementById("flagColor").style.background = response.data.flag;
+      }, function errorCallback(response) {
+      });
   };
+
 
   $http({
     method: 'GET',
@@ -35,33 +68,37 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('SignupCtrl', function($scope,$state) {
+.controller('SignupCtrl', function($scope,$state,$http,SignAccount) {
+
+  $scope.sendDataUser = function(name,email,password) {
+    var status = SignAccount.signEmail(name,email,password);
+    console.log(status);
+  };
+
   $scope.goToLogin = function() {
     $state.go('login');
-  }
-
+  };
 
 })
 
-.controller('LoginCtrl', function($scope,$state,SignAcounts) {
+.controller('LoginCtrl', function($scope,$state,SignAccount) {
   $scope.googleBtn = function() {
     var provider = new firebase.auth.GoogleAuthProvider();
-    SignAcounts.sign(provider);
+    SignAccount.signProvider(provider);
   };
 
   $scope.facebookBtn = function() {
     var provider = new firebase.auth.FacebookAuthProvider();
-    SignAcounts.sign(provider);
+    SignAccount.signProvider(provider);
   };
 
-  $scope.goToDash = function() {
-    $state.go('tab.dash');
+  $scope.goToSignup = function() {
+    $state.go('signup');
   };
-
 
 })
 
-.controller('ProfileCtrl', function($scope, $ionicModal, SignAcounts, $firebaseArray) {
+.controller('ProfileCtrl', function($scope, $ionicModal, SignAccount, $firebaseArray) {
 
   // Conecta a variavel tabelaRef a uma tabela no firebase chamada "messages"
   // var tabelaRef = firebase.database().ref("notifications").child("-KctfiI3OLI6S6zspgNY");
@@ -69,7 +106,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   // $scope.daniel = $firebaseArray(tabelaRef);
   // console.log($scope.daniel);
 
-  $scope.userInfo = SignAcounts.getUserInfo();
+  $scope.userInfo = SignAccount.getUserInfo();
 
   $ionicModal.fromTemplateUrl('editarPerfil', {
     scope: $scope,

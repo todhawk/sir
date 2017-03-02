@@ -6,22 +6,22 @@
     <div class="padding">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="Nome">
+          <input type="text" placeholder="Nome" ng-model="name">
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="E-mail">
+          <input type="text" placeholder="E-mail" ng-model="email">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Senha">
+          <input type="password" placeholder="Senha" ng-model="password">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Digite novamente a senha">
+          <input type="password" placeholder="Digite novamente a senha" ng-model="re_password">
         </label>
       </div>
     </div>
 
     <div class="padding">
-      <button class="button button-block button-positive  button-outline">Cadastrar-se</button>
+      <button class="button button-block button-positive  button-outline" ng-click="sendDataUser(name,email,password,re_password)">Cadastrar-se</button>
       <button class="button button-block button-clear button-assertive" ng-click="goToLogin()">Cancelar</button>
     </div>
 

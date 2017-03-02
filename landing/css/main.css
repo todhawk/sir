@@ -1,0 +1,161 @@
+
+
+/* ==========================================================================
+Author's custom styles
+========================================================================== */
+body{
+  font-family: 'Open Sans', sans-serif;
+
+}
+
+nav {
+  height: 85px;
+}
+
+.navbar-brand img{
+  width: 60px;
+}
+
+
+.banner img{
+  width: 100%;
+  height: 800px;
+  margin: auto;
+  display: block;
+
+}
+
+.banner h1{
+  position: absolute;
+  top: 350px;
+  left: 6%;
+  color: white;
+  font-size: 54px;
+  font-weight: bolder;
+
+}
+.banner h2{
+  position: absolute;
+  top: 430px;
+  left: 6%;
+  color: white;
+  font-size: 22px;
+  font-weight: normal;
+
+}
+
+.mission h2{
+  color: #464648;
+  text-align: center;
+  font-weight: bold;
+  margin: 70px 100px;
+}
+
+.mission p{
+  color: #76726F;
+  text-align: center;
+  font-size: 20px;
+  font-weight: normal;
+  margin: 10px 180px 100px;
+}
+
+.colunas .container {
+  width: 100%;
+  text-align: center;
+
+}
+
+
+.container h2{
+  color: #464648;
+}
+
+.container p{
+  color: #76726F;
+}
+
+.colunas .container {
+  width: 1200px;
+}
+
+span.glyphicon.glyphicon-off {
+  font-size: 40px;
+  color: #cccccc;
+}
+span.glyphicon.glyphicon-flash {
+  font-size: 40px;
+  color: #cccccc;
+}
+span.glyphicon.glyphicon-lock {
+  font-size: 40px;
+  color: #cccccc;
+}
+
+.bandeira .container{
+  width: 1000px;
+  text-align: center;
+  margin-top: 100px;
+
+}
+
+.bandeira .container h1 {
+  margin-bottom: 80px;
+  color: #464648;
+}
+
+
+.banner-second {
+  margin-top: 100px;
+}
+
+.banner-second img{
+  width: 100%;
+}
+
+.banner-second h2{
+
+  margin-left: ;
+  margin-top: -170px;
+  color: white;
+  text-align: center;
+
+}
+
+.banner-second p{
+  margin-top: -110px;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+}
+
+.instalar {
+  margin: 130px;
+}
+
+.instalar h1{
+  text-align:;
+  font-weight: bold;
+  color: #464648
+}
+
+.instalar p{
+  text-align:;
+  font-size: 18px;
+  color: #464648
+}
+
+.section-title .divider {
+  position: relative;
+  border-bottom: 5px solid #f0f0f0;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  width: 70px;
+
+}
+
+
+
+
+.contato .page-header {
+  text-align: center;
+}
