@@ -11,10 +11,10 @@
       <div class="padding">
         <div class="list">
           <label class="item item-input">
-            <input type="text" placeholder="E-mail">
+            <input type="text" placeholder="E-mail" ng-model="email">
           </label>
           <label class="item item-input">
-            <input type="password" placeholder="Senha">
+            <input type="password" placeholder="Senha" ng-model="password">
           </label>
           <a href="#"><p style="text-align:right;">Esqueci minha senha</p></a>
         </div>
@@ -22,7 +22,7 @@
 
 
       <div class="padding">
-        <button class="button button-block button-balanced  button-outline" ng-click="goToDash()">Entrar</button>
+        <button class="button button-block button-balanced  button-outline" ng-click="signInEmail(email,password)">Entrar</button>
         <button class="button button-block button-clear button-positive" ng-click="goToSignup()">crie uma conta agora mesmo!</button>
       </div>
 
