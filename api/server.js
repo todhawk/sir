@@ -71,16 +71,9 @@ var configFirstAccess = function(nameUser) {
 //  ##################         EVENTS         ##################
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    var ref = firebase.database().ref("users");
-
-    ref.child(user.uid).once('value')
-      .then(function(snap) {
-        if (snap) {
-          snap.val();
-        } else {
-          console.log("usuário não encontrado");
-        }
-      });
+    console.log("Nome: " , user.displayName);
+    console.log("Email: " , user.email);
+    console.log("Uid: " , user.uid);
   }
 });
 
