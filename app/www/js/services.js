@@ -18,7 +18,8 @@ angular.module('starter.services', [])
     .then(function() { // Caso o Sign Up de certo o usuário será logado automaticamente
       if (firebase.auth().currentUser) {
         firebase.auth().currentUser.updateProfile({
-          displayName : name
+          displayName : name,
+          photoURL : "https://firebasestorage.googleapis.com/v0/b/sistemasir-5944f.appspot.com/o/photoUser-basic.png?alt=media&token=598f950b-94be-4f06-a146-45a299746f4d"
         }).then(function() {
           var currentUser = firebase.auth().currentUser;
           // console.log("CurrentUser: " , currentUser);
