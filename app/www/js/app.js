@@ -60,6 +60,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('passForget', {
+      url: '/passForget',
+      templateUrl: 'templates/passForget.html',
+      controller: 'PassForgetCtrl'
+    })
+
   .state('signup', {
       url: '/signup',
       templateUrl: 'templates/signup.html',
