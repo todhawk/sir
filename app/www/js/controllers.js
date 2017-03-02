@@ -68,6 +68,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
+.controller('PassForgetCtrl', function($scope,$state,SignAccount) {
+  $scope.passRedefine = function(email) {
+    SignAccount.passRedefine(email);
+  };
+
+  $scope.goToLogin = function() {
+    $state.go('login');
+  };
+
+})
+
 .controller('SignupCtrl', function($scope,$state,$http,SignAccount) {
 
   $scope.createUser = function(name,email,password) {
@@ -93,6 +104,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.facebookBtn = function() {
     var provider = new firebase.auth.FacebookAuthProvider();
     SignAccount.signProvider(provider);
+  };
+
+  $scope.goToPassRedefine = function() {
+    $state.go('passForget');
   };
 
   $scope.goToSignup = function() {
