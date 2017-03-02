@@ -8,6 +8,14 @@ angular.module('starter.services', [])
     return userInfo;
   };
 
+  svc.passRedefine = function(email) {
+    firebase.auth().sendPasswordResetEmail(email).then(function() {
+      console.log("Email enviado!");
+    }, function(error) {
+      console.log("Email não enviado!");
+    });
+  };
+
   svc.createUserEmail = function(name,email,password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
@@ -35,7 +43,6 @@ angular.module('starter.services', [])
     }); //end then
   };
 
-
   svc.signInEmail = function(email,password) {
     firebase.auth().signInWithEmailAndPassword(email, password)
      .catch(function(error) {
@@ -44,7 +51,7 @@ angular.module('starter.services', [])
      .then(function() { // Caso o Sign Up de certo o usuário será logado automaticamente
        var currentUser = firebase.auth().currentUser;
        // console.log("CurrentUser: " , currentUser);
-       if (currentUser) {
+       if (currentUser && currentUser.email == email) {
          userInfo = {
            name:currentUser.displayName,
            email:currentUser.email,
