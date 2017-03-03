@@ -1,7 +1,6 @@
 // Importação da biblioteca do express para dentro do nosso código
 var express = require('express');
-// Biblioteca que possibilita/libera o acesso a api por servidores externos
-var cors = require('cors');
+var cors = require('cors'); // Biblioteca que possibilita/libera o acesso a api por servidores externos
 var firebase = require("firebase");
 
 //  ------------------         Seus módulos         ------------------
@@ -30,42 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded
 var action = {};
 action.newPostKey = function() {
   return firebase.database().ref().push().key;
-};
-
-var configFirstAccess = function(nameUser) {
-  var user = firebase.auth().currentUser;
-  user.updateProfile({
-    displayName: nameUser
-  }).then(function() {
-    console.log("Nome do usuario atualizado");
-    console.log("\n\nNome :" , user.displayName);
-    console.log("Email :" , user.email);
-    console.log("Uid :" , user.uid);
-    console.log("PhotoUrl :" , user.photoUrl);
-    console.log("\n\n");
-
-    // var ref = firebase.database().ref();
-    // var payload = {};
-    // var uid = user.uid;
-    // var date = new Date();
-    // var dataUser = {
-    //   nome : user.displayName,
-    //   email : user.email,
-    //   dateCad : {
-    //     dia : date.getDate(),
-    //     mes : date.getMonth(),
-    //     ano : date.getFullYear(),
-    //     diaSemana : date.getDay(),
-    //     hora : date.getHours(),
-    //     minuto : date.getMinutes(),
-    //     segundo : date.getSeconds()
-    //   }
-    // };
-    // payload['users/' + uid + '/'] = dataUser;
-    // ref.update(payload);
-  }, function(error) {
-    console.log("Nome do usuario não atualizado");
-  });
 };
 
 //  ##################         EVENTS         ##################
@@ -246,59 +209,140 @@ app.get('/devices', function (req, res) {
     });
 })
 
-//  ------------------         get-users         ------------------
-app.get('/users', function (req, res) {
-  var ref = firebase.database().ref();
+//  ------------------         post - Cadastro de Imóveis         ------------------
+app.post('/cadHouse', function (req, res) {
+  var erros = []; // será preenchida com possiveis erros de autenticação
 
-  var newPostKey = firebase.database().ref().child('users').push().key;
+  if (!req.body.uid)           {  erros.push("Uid  não informado");       }
+  if (!req.body.nameHouse)     {  erros.push("Nome não informado");       }
+  if (!req.body.addressHouse)  {  erros.push("Email não informado");      }
+  if (!req.body.photoUrl)      {  erros.push("PhotoUrl não informada");   }
 
-  var payload = {};
-  var uid = "w7HwtXmYzEWNhTjXzzvJq1VuVVY2";
+  if (erros.length > 0) {
+    res.json( { status : false,  erros : erros  } );
+  } else {
+    var ref = firebase.database().ref();
+    var date = new Date();
+    var idHouse = action.newPostKey();
+    var payload = {};
+    var uid = req.body.uid;
+    var dataHouse = {
+      nameHouse : req.body.nameHouse,
+      addressHouse : req.body.addressHouse,
+      photoUrl : req.body.photoUrl,
+      dateCad : {
+        dia : date.getDate(),
+        mes : date.getMonth(),
+        ano : date.getFullYear(),
+        diaSemana : date.getDay(),
+        hora : date.getHours(),
+        minuto : date.getMinutes(),
+        segundo : date.getSeconds()
+      }
+    };
+    var dataDweller = {
+      level : "admin",
+      authAccess : true
+    };
 
-  var dataUser = {
-    nameUser:"Daniel Alves de Souza",
-    emailUser:"alvesdesouza.daniel@gmail.com",
-    photoURL:"photoURL",
-    houses:{
-      house1:newPostKey
-    }
-  };
+    payload['houses/' + idHouse + '/'] = dataHouse;
+    payload['dwellersGroup/' + idHouse + '/' + uid] = dataDweller;
+    payload['users/' + uid + '/houses/' + idHouse] = true;
 
-  var dataDwellersGroup = {
-    admin:true
-  };
+    ref.update(payload);
+    res.json({status : true, erros : false});
+  } //end else
 
-  var dataHouse = {
-    addressHouse:"Rua Afonso XIII, 636",
-    nameHouse:"Minha Casa"
-  }
+})  //end of endpoint /cadHouse
 
-  var dataDevices = {
-    a:"a",
-    b:"b",
-    c:"c",
-    d:"d"
-  }
+//  ------------------         post-users         ------------------
+app.post('/cadUser', function (req, res) {
+  var erros = []; // será preenchida com possiveis erros de autenticação
 
-  payload['users/' + uid + '/'] = dataUser;
-  payload['profileHouse/' + newPostKey + '/'] = dataHouse;
-  payload['devicesGroup/' + newPostKey + '/'] = dataDevices;
-  payload['dwellersGroup/' + newPostKey + '/' + uid + '/'] = dataDwellersGroup;
+  if (!req.body.uid)      {  erros.push("Uid  não informado");                }
+  if (!req.body.name)     {  erros.push("Nome não informado");                }
+  if (!req.body.email)    {  erros.push("Email não informado");               }
+  if (!req.body.sex)      {  erros.push("Sexo não informado");                }
+  if (!req.body.phone)    {  erros.push("Telefone não informado");            }
+  if (!req.body.mobile)   {  erros.push("Celular não informado");             }
+  if (!req.body.dateBorn) {  erros.push("Data de Nascimento não informada");  }
+  if (!req.body.photoUrl) {  erros.push("PhotoUrl não informada");            }
 
-  res.send(payload);
-  ref.update(payload);
+  if (erros.length > 0) {
+    res.json( { status : false,  erros : erros  } );
+  } else {
+    var ref = firebase.database().ref();
+    var payload = {};
+    var uid = req.body.uid;
+    var date = new Date();
+    var dateCad = {
+        dia : date.getDate(),
+        mes : date.getMonth(),
+        ano : date.getFullYear(),
+        diaSemana : date.getDay(),
+        hora : date.getHours(),
+        minuto : date.getMinutes(),
+        segundo : date.getSeconds()
+    };
+
+    payload['users/' + uid + '/name'] = req.body.name;
+    payload['users/' + uid + '/email'] = req.body.email;
+    payload['users/' + uid + '/sex'] = req.body.sex;
+    payload['users/' + uid + '/phone'] = req.body.phone;
+    payload['users/' + uid + '/mobile'] = req.body.mobile;
+    payload['users/' + uid + '/dateBorn'] = req.body.dateBorn;
+    payload['users/' + uid + '/photoUrl'] = req.body.photoUrl;
+    payload['users/' + uid + '/dateCad'] = dateCad;
+
+    ref.update(payload);
+    res.json({status : true, erros : false});
+  } //end else
 
 
-
-  // // var ref = firebase.database().ref('users');
   //
-  // firebase.database().ref('users').once('value')
-  //   .then(function(snap) {
-  //     // var userMails = snap.val();
-  //     console.log(snap.val());
-  //   });
+  // --------------------------------------------------
+  // var ref = firebase.database().ref();
+  //
+  // var newPostKey = action.newPostKey();
+  //
+  // var payload = {};
+  // var uid = req.body.uid;
+  //
+  // var dataUser = {
+  //   nameUser:"Daniel Alves de Souza",
+  //   emailUser:"alvesdesouza.daniel@gmail.com",
+  //   photoURL:"photoURL",
+  //   houses:{
+  //     house1:newPostKey
+  //   }
+  // };
+  //
+  // var dataDwellersGroup = {
+  //   admin:true
+  // };
+  //
+  // var dataHouse = {
+  //   addressHouse:"Rua Afonso XIII, 636",
+  //   nameHouse:"Minha Casa"
+  // }
+  //
+  // var dataDevices = {
+  //   a:"a",
+  //   b:"b",
+  //   c:"c",
+  //   d:"d"
+  // }
+  //
+  // payload['users/' + uid + '/'] = dataUser;
+  // payload['profileHouse/' + newPostKey + '/'] = dataHouse;
+  // payload['devicesGroup/' + newPostKey + '/'] = dataDevices;
+  // payload['dwellersGroup/' + newPostKey + '/' + uid + '/'] = dataDwellersGroup;
+  //
+  // res.send(payload);
+  // ref.update(payload);
 
-})
+
+})  //end of endpoint /cadUsers
 
 //  ------------------         app Listen - node         ------------------
 app.listen(3000, function () {
