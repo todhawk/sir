@@ -8,11 +8,11 @@ var calc = require('./servicos/calculos');
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyAafDchHBhcoFdtow3Fvia9vNKruczamc8",
-  authDomain: "sistemasir-5944f.firebaseapp.com",
-  databaseURL: "https://sistemasir-5944f.firebaseio.com",
-  storageBucket: "sistemasir-5944f.appspot.com",
-  messagingSenderId: "745665908827"
+  apiKey: "xxx",
+  authDomain: "xxx",
+  databaseURL: "xxx",
+  storageBucket: "xxx",
+  messagingSenderId: "xxx"
 };
 firebase.initializeApp(config);
 
