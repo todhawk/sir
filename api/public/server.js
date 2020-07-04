@@ -6,11 +6,7 @@ var firebase = require("firebase");
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyAafDchHBhcoFdtow3Fvia9vNKruczamc8",
-  authDomain: "sistemasir-5944f.firebaseapp.com",
-  databaseURL: "https://sistemasir-5944f.firebaseio.com",
-  storageBucket: "sistemasir-5944f.appspot.com",
-  messagingSenderId: "745665908827"
+
 };
 firebase.initializeApp(config);
 
@@ -68,8 +64,8 @@ app.get('/users', function (req, res) {
   var uid = "w7HwtXmYzEWNhTjXzzvJq1VuVVY2";
 
   var dataUser = {
-    nameUser:"Daniel Alves de Souza",
-    emailUser:"alvesdesouza.daniel@gmail.com",
+    nameUser:"",
+    emailUser:"",
     photoURL:"photoURL",
     houses:{
       house1:newPostKey
@@ -81,8 +77,7 @@ app.get('/users', function (req, res) {
   };
 
   var dataHouse = {
-    addressHouse:"Rua Afonso XIII, 636",
-    nameHouse:"Minha Casa"
+
   }
 
   var dataDevices = {
